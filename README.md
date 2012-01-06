@@ -15,7 +15,7 @@ A store provides a simple interface to the GridFS entities in a MongoDB database
 provides basic `put` and `get` operations and allows the data to be arbitrarily processed.
 
     var nettle = require('nettle');
-    var store = nettle.store({ db: 'example' });
+    var store = nettle.store({ db: 'nettle' });
 
 Optionally specify `host`, `port` and collection `prefix` (defaults to `'fs'`) when
 creating a store.
