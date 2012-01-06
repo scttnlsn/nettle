@@ -54,6 +54,12 @@ One can then retrieve processed entities by passing the processor name to `get`:
     
     // -> 'oof'
     
-Note that processed entities are stored and later retrieved by the given `id`
-and processor `key`. The `process` function will thus only be called on a cache
-miss.
+Note that processed entities are cached internally.  The processor function will only
+be called when the given `id` and processor name are not found in the cache.  One can
+also explicitly force an entity to be processed:
+
+    store.process(id, 'reversed', function(err, buffer) {
+        console.log(buffer.toString());
+    });
+    
+    // -> 'oof'
