@@ -1,0 +1,22 @@
+{
+    "name":         "nettle",
+    "version":      "0.0.0",
+    "description":  "On-the-fly processing framework for Node.js and MongoDB",
+    "homepage":     "http://github.com/scttnlsn/nettle",
+    "author":       "Scott Nelson <scottbnel@gmail.com>",
+    "main":         "./lib/index",
+    
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/scttnlsn/nettle.git"
+    },
+    
+    "dependencies": {
+        "async": ">= 0.1.15",
+        "mongodb": ">= 0.9.7"
+    },
+    
+    "devDependencies": {
+        "mocha": "0.8.1"
+    }
+}
