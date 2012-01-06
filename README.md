@@ -37,29 +37,22 @@ And later retrieving it:
 Processing
 ----------
 
-A processor is an object with two properties: `key` and `process`.  `key` must be a string
-(or a function that returns a string) and `process` must be a function accepting a buffer and
-callback.  An example string processor might look something like this:
-    
-    var Concat = function(str) {
-        this.key = function() {
-            return 'concat_' + str;
-        },
-        
-        this.process = function(buffer, callback) {
-            callback(null, new Buffer(buffer.toString() + str));
-        }
-    };
-    
-    var processor = new Concat('bar');
+A processor defines an operation to be performed on entities in a store.  Each processor
+is referenced by a unique name that is specified at its creation.  An example string
+processor might look something like this:
 
-One can then retrieve processed entities by passing the processor to `get`:
+    store.processor('reversed', function(buffer, callback) {
+        var reversed = buffer.toString().split('').reverse().join('');
+        callback(null, new Buffer(reversed));
+    });
+
+One can then retrieve processed entities by passing the processor name to `get`:
     
-    store.get(id, processor, function(err, buffer) {
+    store.get(id, 'reversed', function(err, buffer) {
         console.log(buffer.toString());
     });
     
-    // -> 'foobar'
+    // -> 'oof'
     
 Note that processed entities are stored and later retrieved by the given `id`
 and processor `key`. The `process` function will thus only be called on a cache

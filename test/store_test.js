@@ -30,21 +30,19 @@ describe('Store', function() {
     
     describe('when processing an entity', function() {
         var count;
-        var processor = {
-            key: 'reversed',
-            process: function(buffer, callback) {
-                var result = buffer.toString().split('').reverse().join('');
-                count++;
-                callback(null, new Buffer(result));
-            }
-        };
+        
+        store.processor('reversed', function(buffer, callback) {
+            var result = buffer.toString().split('').reverse().join('');
+            count++;
+            callback(null, new Buffer(result));
+        });
         
         beforeEach(function() {
             count = 0;
         });
         
         it('stores the processed entity', function(done) {
-            store.get(id, processor, function(err, result) {
+            store.get(id, 'reversed', function(err, result) {
                 if (err) throw err;
                 assert.equal(result.toString(), 'oof');
                 done();
@@ -53,7 +51,7 @@ describe('Store', function() {
         
         it('caches the processed entity', function(done) {
             var get = function(callback) {
-                store.get(id, processor, callback);
+                store.get(id, 'reversed', callback);
             };
             
             count = 0;
