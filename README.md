@@ -12,7 +12,8 @@ Stores
 ------
 
 A store provides a simple interface to the GridFS entities in a MongoDB database.  It
-provides basic `put` and `get` operations and allows the data to be arbitrarily processed.
+provides basic `put`, `get`, and `delete` operations and allows the data to be arbitrarily
+processed.
 
     var nettle = require('nettle');
     var store = nettle.store({ db: 'nettle' });
@@ -20,19 +21,25 @@ provides basic `put` and `get` operations and allows the data to be arbitrarily 
 Optionally specify `host`, `port` and collection `prefix` (defaults to `'fs'`) when
 creating a store.
 
-Simple example of inserting a buffer into the store:
+Putting an entity into the store:
 
     store.put(new Buffer('foo'), function(err, doc) {
         console.log(doc._id);
     });
     
-And later retrieving it:
+Getting an entity out of the store:
 
     store.get(id, function(err, buffer) {
         console.log(buffer.toString());
     });
     
     // -> 'foo'
+    
+Removing an entity from the store:
+
+    store.delete(id, function(err) {
+        
+    });
     
 Processing
 ----------
