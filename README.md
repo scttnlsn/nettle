@@ -38,7 +38,6 @@ Getting an entity out of the store:
 Removing an entity from the store:
 
     store.delete(id, function(err) {
-        
     });
     
 Processing
@@ -70,3 +69,5 @@ also explicitly force an entity to be processed:
     });
     
     // -> 'oof'
+    
+When deleting an entity, its associated cache will be deleted as well.
