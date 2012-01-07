@@ -28,6 +28,18 @@ describe('Store', function() {
         });
     });
     
+    it('deletes entities', function(done) {
+        store.delete(id, function(err) {
+            if (err) throw err;
+            
+            store.get(id, function(err, result) {
+                assert.notEqual(err, null);
+                assert.notEqual(err, undefined);
+                done();
+            });
+        });
+    });
+    
     describe('when processing an entity', function() {
         var count;
         
@@ -64,6 +76,38 @@ describe('Store', function() {
                 });
                 
                 done();
+            });
+        });
+        
+        describe('when invalidating the entity cache', function() {
+            var result;
+            
+            beforeEach(function(done) {
+                store.get(id, 'reversed', function(err, result) {
+                    if (err) throw err;
+                    result = result;
+                    done();
+                });
+            });
+            
+            it('reprocesses the entity', function(done) {
+                assert.equal(count, 1);
+                
+                store.get(id, 'reversed', function(err, result) {
+                    if (err) throw err;
+                    
+                    assert.equal(count, 1);
+                    store.invalidate(id, function(err) {
+                        if (err) throw err;
+
+                        store.get(id, 'reversed', function(err, result) {
+                            if (err) throw err;
+
+                            assert.equal(count, 2);
+                            done();
+                        });
+                    });
+                });
             });
         });
     });
