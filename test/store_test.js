@@ -3,11 +3,8 @@ var async = require('async');
 var mongo = require('mongodb');
 var nettle = require('../lib/index');
 
-var store = nettle.store({
-    host: process.env.NETTLE_TEST_HOST || 'localhost',
-    port: process.env.NETTLE_TEST_PORT || 27017,
-    db: process.env.NETTLE_TEST_DB || 'nettle_tests'
-});
+var db = process.env.NETTLE_TEST_DB || 'mongodb://test:test@localhost:27017/nettle_tests';
+var store = nettle.store(db);
 
 describe('Store', function() {
     var id;
